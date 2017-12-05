@@ -1,0 +1,4 @@
+body {min-width: 320px;}
+
+.wrapper {min-width: 320px; max-width: 990px; width: 100%;}
+@media (max-width: 991px;) {}

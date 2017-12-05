@@ -1,0 +1,812 @@
+@mixin respond-to($media) {
+
+	// mobile first
+	@if $media == mobile {@media (max-width: 400px) {@content;}}
+
+	// grid
+	@else if $media == xs {@media (max-width: 480px) {@content;}}
+	@else if $media == sm {@media (max-width: 767px) {@content;}}
+	@else if $media == md {@media (max-width: 991px) {@content;}}
+	@else if $media == lg {@media (max-width: 1199px) {@content;}}
+	@else if $media == desktop {@media (max-width: 1299px) {@content;}}
+	@else {@media (max-width: $media) {@content;}}
+}
+
+//	MAIN STYLES
+body {min-width: 320px;}
+.wrapper {min-width: 320px; max-width: 990px; width: 100%;}
+
+//Офрмление блоков
+.white-box {
+	@include respond-to(md) {
+		border: none; box-shadow: none; 
+	}
+}
+.gray-box, .green-box, .blue-box, .purple-box {
+	@include respond-to(md) {
+		border: none; box-shadow: none; border-radius: 0;
+	}
+}
+.complete_top {
+	@include respond-to(xs) {height: auto !important; padding: 8px 0px 8px 0px !important;}
+}
+//HEADER
+.header {
+	@include respond-to(md) {
+		display: flex; flex-wrap: wrap;
+		height: auto; padding-bottom: 20px; 
+		background-size: 150px auto; 
+		.logo, .logo-img, .navigation {
+			flex-shrink: 0; order: 0;
+			width: 50%;
+		}
+		.logo, .navigation {
+			ul {
+				& > li {padding: 3px 4px 2px;}
+			}
+		}
+		.search-form {
+			order: 1; flex-shrink: 0;
+			width: 100%; margin-left: 10px; position: static; padding-top: 10px; box-sizing: border-box;
+		}
+	}
+	.search-form {
+		.c-button {
+			@include respond-to(sm) {height: 32px;}
+		}
+	}
+	@include respond-to(sm) {
+		display: block;
+		text-align: center;
+		height: auto; max-height: auto; overflow: visible; padding-bottom: 7px; padding-top: 10px; margin-top: 0;
+		
+		.logo, .navigation {width: auto;}
+		.logo {
+			float: none; display: inline-block; height: 46px; margin-top: 0; width: 100%; position: relative; top: 0;
+			background-position: center; background-size: contain;
+			&-img {
+				float: none; width: auto; display: inline-block; margin: 0; height: 51px;
+			}
+		}
+	}
+
+	.search-open {
+		display: none;
+		@include respond-to(sm) {
+			display: block; position: absolute; right: 2020px; top: 23px; width: 20px; height: 20px;
+			background: url(search.png) no-repeat right 0;
+			cursor: pointer;
+			transition: all .4s linear 0.1s; 
+			&.active {opacity: 0.6;}
+		}
+	}
+
+	.search-form {
+		@include respond-to(lg) {padding-right: 15px;}
+		@include respond-to(md) {
+			.text {width: calc(100% - 122px);}
+		}
+		@include respond-to(sm) {
+			display: none; float: none; width: 100%; margin-left: 0; left: 0; position: relative; right: 0; left: 0; top: 0; padding: 7px 0 13px 14px;
+			.text {width: calc(100% - 100px);}
+		}
+		 
+		@media (min-width: 768px) {display: block !important;}
+		
+	}
+
+	.burger {
+		@include respond-to(sm) {
+			width: 25px; height: 25px; position: absolute; left: 2015px; top: 24px; cursor: pointer; z-index: 200;
+			transition: all .4s linear 0.1s;
+			&.active {
+				span{
+					position: relative; z-index: 2;
+					&:first-child {transform: rotate(45deg); top: 7px;}
+					&:nth-child(2){opacity: 0;}
+					&:last-child {transform: rotate(-45deg); top: -7px;}
+				}
+			}
+			span {
+				display: block; width: 25px; height: 2px;
+				background: #038fbe;
+				transition: all .4s ease;
+				&:nth-child(2){margin: 5px 0;}
+			}
+		}
+	}
+
+	.navigation {
+		@include respond-to(md) {float: right;}
+
+		@include respond-to(sm) {
+			text-align: left;
+			display: inline-block; height: 0; max-height: 0; width: 200px; float: none; position: absolute; z-index: 11; top: 65px; left: 2013px; overflow: hidden;
+			background: #fff; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); border-radius: 5px;
+			transition: all .4s ease-in; 
+			&.active {
+				height: auto; max-height: 1000px;
+			}
+			i {display: none;}
+		}
+
+		& > ul {
+			padding-left: 8px;
+			@include respond-to(md) {float: right; padding-right: 15px; padding-left: 0;}
+			@include respond-to(sm) {
+				float: none; height: auto; display: inline-block; width: 192px; padding-left: 4px; padding-right: 4px;
+			}
+
+			li {
+				@include respond-to(sm) {float: none; background: none;}
+				@include respond-to(xs) {
+					padding: 3px 0; margin-left: 3px;
+					background: none; 
+					span {padding: 1px 5px;}
+				}
+			}
+		}
+	}
+}
+
+
+//MAIN CONTENT
+div.essays_page ul {
+	@include respond-to(md) {width: 33.333%; box-sizing: border-box;}
+	@include respond-to(sm) {width: 50%;}
+	@include respond-to(xs) {width: 100%;}
+}
+
+.main {
+	//.promo-block сверху
+	.promo-block {
+		box-sizing: border-box;
+		@include respond-to(sm) {padding-right: 15px;}
+		@include respond-to(xs) {
+			h2 {font-size: 20px; line-height: 26px; margin-bottom: 20px;}
+			.social {display: none;}
+		}
+	}
+
+	//.promo-block снизу
+	.promo-block {
+		&.bottom {
+			@include respond-to(sm) {
+				.promo-image {display: none;}
+			}
+			@include respond-to(xs) {
+				display: flex; flex-direction: column;
+				padding-right: 15px;
+				.promo-image {display: none;}
+				h3 {order: 0;}
+				.list {order: 0;}
+				.c-button {
+					order: 1;
+					text-align: center; margin: 22px 0 0 0;
+				}
+
+			}
+		}
+	}
+
+	.promo-blog {
+		@include respond-to(sm){margin-bottom: 20px;}
+		@include respond-to(md) {width: 100%; box-sizing: border-box;}
+		.two-columns {
+			@include respond-to(md) {width: 100%;}
+			.column {
+				@include respond-to(md) {
+					float: left; width: calc(50% - 30px);
+					&:first-child {margin-right: 30px;}
+				}
+				@include respond-to(sm) {
+					width: 100%; margin-bottom: 30px;
+					&:last-of-type {margin-bottom: 0;}
+				}
+			}
+		}
+	}
+
+	.people-block {
+		@include respond-to(md) {
+			width: 100%; padding: 0 20px 15px 20px;
+			box-sizing: border-box;
+		}
+		.author {
+			text-align: left; padding-top: 7px; padding-left: 0;
+		}
+	}
+
+	.side-holder {
+		.content, .aside {
+			@include respond-to(md) {width: calc(100% - 6px); margin: 0 3px;}
+		}
+		.content {}
+		.aside {
+			@media (min-width:992px) and (max-width: 1030px) {width: 238px;}
+			@include respond-to(md) {margin-top: 10px;}
+			#update_tip {
+				@include respond-to(md) {right: -18% !important; left: auto !important;}
+				@include respond-to(sm) {right: -25% !important;}
+				@media (max-width:520px) {right: -35% !important;}
+				@media (max-width:375px) {right: -41% !important;}
+			}
+			.aside-box {
+				.gallery-holder {
+					@include respond-to(md) {
+					 text-align: center;
+					}
+					.gallery {
+						@include respond-to(md) {margin: 0 auto;} 
+					}
+				}
+
+				.switch-holder {
+					@include respond-to(md) {
+						margin-top: 10px; width: 215px; display: inline-block;
+					}
+				}
+
+				.rating-block {
+					@include respond-to(md) {text-align: center;}
+				}
+				& > p { text-align: center;}
+			}
+		}
+	}
+
+	//блок категорий http://prntscr.com/h8nav6
+	.categories-block {
+		h4 {
+			@include respond-to(sm) {line-height: 28px; margin-bottom: 10px;}
+		}
+		.column {
+		box-sizing: border-box; padding-left: 21px;
+		@include respond-to(md) {
+			width: 100%; padding-left: 0; 
+			background: none;
+			&:first-child {margin-bottom: 20px;}
+
+		}
+		.holder {
+			div.box {
+				box-sizing: border-box; padding-left: 7px; width: 188px;
+				@include respond-to(md) {width: 33.33333%; padding-right: 15px;}
+				@include respond-to(xs) {
+					width: 100%; margin-bottom: 20px;
+					&:label {margin-bottom: 0;}
+				}
+				ul {
+					li {
+						margin-bottom: 5px;
+						&:last-of-type {margin-bottom: 0;}
+					}
+				}
+			}
+			& > ul {
+				@include respond-to(md) {float: left; width: 50%;}
+			}
+		}
+	}
+	}
+	
+}
+
+//Промо блок на всех остальных страницах, кроме глаыной
+.content-holder {
+	@include respond-to(xs) {
+		h1 {font-size: 20px;}
+	}
+	
+	.promo-block {
+		@include respond-to(sm) {
+			display: none;
+		}
+	}
+}
+
+//http://prntscr.com/h8aebt
+.agreement {
+	@include respond-to(xs) {height: 90px;}
+}
+
+//CONTENT
+.payment_logos > span {
+	@include respond-to(sm) {
+		float: none !important;
+		margin: 0 0 15px 0 !important;
+	}
+}
+.content {
+	//http://prntscr.com/gqq5wh
+	.head-line {
+		.soc-list {
+			@include respond-to(sm) {margin-top: 0;}
+			@include respond-to(xs) {float: none;}
+		}
+		.breadcrumbs {
+			@include respond-to(sm) {margin-top: 0;}
+			@include respond-to(xs) {float: none;}
+		}
+	}
+
+	.paper-list {
+
+		li {
+			@include respond-to(sm) {
+				.paper {display: none;}
+				.description{margin-left: 0;}
+			}
+		}
+		.info {
+			.author {
+				@include respond-to(xs) {display: block; margin-left: 0;}
+			}
+		}
+	}
+
+	//http://prntscr.com/gqq6a6
+	.paper {
+		.continue_download {
+			font-size: 14px; padding: 10px 7px; margin: 15px 0 22px; background: #f1f1f1;
+			@media (max-width: 620px){
+				display: flex; flex-direction: column-reverse;
+				text-align: center; 
+				padding: 15px 7px;
+			}
+
+			.download_text {
+				float: right;
+				@media (max-width: 620px) {float: none;}
+				& > span {
+					@include respond-to(xs) {display: block;}
+					&:first-child {
+						@include respond-to(xs) {margin-bottom: -10px;}
+					}
+				}
+			}
+
+			& > a {
+				@media (max-width: 620px) {float: none; display: block; margin-bottom: 10px;}
+			}
+
+		}
+
+		.holder {
+			@include respond-to(sm) {height: auto !important;}
+
+			.r-col {
+				@include respond-to(xs) {width: 100%;}
+				.orange-button.bold.fixed {
+					@include respond-to(xs) {
+						text-align: center;
+						position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;
+						border-radius: 0; margin: 0; padding-left: 0; padding-top: 10px; padding-bottom: 10px; border: none;
+					}
+				}
+			}
+
+			.c-button { 
+				@include respond-to(xs) {
+					text-align: center;
+					width: calc(100% - 30px); margin-top: 10px; margin-bottom: 5px; 
+
+				}	
+			}
+				
+		}
+		
+	}
+}
+
+.search-form {
+	label {
+		&:last-child {margin-right: 0;}
+	}
+}
+//ПОИСК
+//https://prnt.sc/h7g0c3
+.category-item {
+	@include respond-to(sm) {
+		.search-form {
+			display: none;
+		}
+		& > div.paging-holder {
+			padding-bottom: 0;
+			&:first-of-type {display: none !important;}
+			.row {padding-bottom: 0;}
+			.paging {
+				& > li {margin-bottom: 15px;}
+			}
+		}
+	}
+}
+
+.search-result {
+	& > div.paging-holder {
+		@include respond-to(sm) {&:first-of-type {display: none !important;}}
+	}
+}
+
+.paging > li {
+	@include respond-to(sm) {margin-bottom: 15px;}
+}
+
+#main_search_form {
+	@include respond-to(md) {width: 700px;}
+	 @include respond-to(sm) {
+	 	width: 100%;
+		fieldset .row input {width: calc(100% - 110px);}
+	}
+	@media (max-width: 355px) {
+		fieldset .holder label {
+			margin-bottom: 15px; 
+			&:last-child {margin-bottom: 0; margin-right: 0;}
+		}
+	}
+}
+#adv_search_form.purple-box {
+	width: auto; margin-left: 0;
+	border-radius: 6px; box-shadow: inset 0 3px 0 #dce3ef, 0 1px 2px rgba(0,0,0,0.10); border: 1px solid #dce3ef;
+	@include respond-to(md) {
+		width: 100%; margin-left: 0; 
+		box-sizing: border-box; border-radius: 0; border: none; box-shadow: none;
+		select {float: none;}
+	}
+}
+
+form#id_delete_form {
+	select {
+		@include respond-to(md) {margin-bottom: 15px;}
+		@include respond-to(xs) {width: 100%;}
+	}
+	.button-holder {
+		@include respond-to(md) {width: 100% !important;}
+	}
+}
+
+
+//COMMENTS
+.comments-box {
+	.fb_iframe_widget {
+		@include respond-to(md) {
+			display: block;
+			span {
+				width: 100% !important;
+				iframe {position: relative; width: 100% !important;}
+			}
+		}
+	}
+}
+
+//Страница входа и присоединиться
+.promo-block {
+	@include respond-to(md) {
+		padding-left: 15px; padding-bottom: 15px;
+		& > ul {
+			display: none;
+			&.list {display: block;}
+		}
+	}
+	
+	@include respond-to(xs) {
+		.right-col {
+			float: left;
+			margin: 0 0 10px 0;
+		}
+		.list {width: 100%;}
+	}
+}
+.login-form {
+	@include respond-to(md) {
+		background: none;
+		& > fieldset {
+			display: flex; flex-direction: column;
+			.column {float: none; display: block; clear: none;}
+			.column:nth-child(2) {
+				margin: 0; position: relative; padding-top: 40px; overflow: hidden;
+				&:before {
+					content: 'or';
+					color: #777; font-size: 16px; text-transform: uppercase; text-align: center; font-weight: bold;
+					height: 27px; width: 100%; padding-top: 10px; position: absolute; top: 0; left: 0;
+					background: #ebecec;
+				}
+			}
+			.border-text {display: none;}
+		}
+	}
+}
+
+#join_form {
+	fieldset {
+		@include respond-to(md) {
+			.login-form {
+				display: flex; flex-direction: column;
+				.column:first-child {order: 0; margin: 0;}
+				.column:nth-child(2) {order: 2;}
+				.border-text {order: 1; position: static; margin: 10px 0; width: 100%; background: #ebecec;}
+			}
+		}
+	}
+}
+
+
+
+.login-form .social-block {
+	@include respond-to(md) {
+		text-align: left;
+	}
+	.row {
+		@include respond-to(md) {
+			display: inline-block; padding: 0; margin-right: 10px;
+			&:last-child {margin-right: 0;}
+		}
+	}
+}
+
+.login-form .button-holder {
+	@include respond-to(md) {
+		float: left; 
+		.green-button {margin-right: 20px;}
+	}
+	@include respond-to(sm) {
+		width: 100%;
+		.green-button {text-align: center; width: 100%; box-sizing: border-box; margin-right: 0;}
+		span.button-title {
+			display: block; float: none;
+			&:last-child {clear: both; text-align: left;}
+		}
+	}
+}
+
+.login-form .column {
+	@include respond-to(md) {width: 100%;}
+	.section {
+		.row {
+			@include respond-to(md) {
+				display: block; padding: 0; margin-right: 10px; margin-bottom: 10px; width: 100%;
+				&:last-child {margin-right: 0;}
+				input {float: left;}
+			}
+			@include respond-to(sm){
+				margin-right: 0;
+				input {width: 100%!important; box-sizing: border-box;} 
+			} 
+			@include respond-to(xs) {
+				margin-bottom: 15px;
+				&:last-child {margin-bottom: 0;}
+				label, input {float: none;}
+				input {width: 250px;}
+			}
+		}	
+	}
+	.gray-button {
+		@include respond-to(sm) {width: 6px; min-width: auto;}
+	}
+}
+
+//Выбор тарифа
+.choose-block {
+	h1 {
+		@include respond-to(xs) {font-size: 24px; line-height: 28px;}
+	}
+	.choose-list {
+		li {
+			@media (max-width: 725px) {
+				width: 100%; margin-bottom: 30px;
+				&:last-child {margin-bottom: 0;}
+			}
+		}
+		
+		.holder > .row {
+			 @include respond-to(sm)  {
+			 	display: none;
+			 	&.no-border {display: block;}
+			 }
+		}
+	}
+}
+
+//оплата тарифа
+.payment-block {
+	@include respond-to(md) {min-height: auto;}
+	.select-method {
+		li {
+			@include respond-to(516px) {
+				margin-bottom: 20px;
+				&:last-child {margin-bottom: 0;}
+			}
+		}
+	}
+}
+
+//страница бесплатного тарифа
+.upload-form {
+	.text-input {
+		@include respond-to(sm) {width: 100%!important; box-sizing: border-box;}
+	}
+	label {
+		@include respond-to(sm) {margin-bottom: 5px;}
+	}
+	.tabset {
+		.control {
+			li {
+				@include respond-to(xs) {
+					width: 50%; margin: 0;
+					box-sizing: border-box;
+					a {padding: 0 5px;}
+				}
+			}
+		}
+		textarea {
+			width: 98%!important;
+			@media (max-width: 561px) {width: 100%!important; box-sizing: border-box;}
+		}
+	}
+	.row {
+		@media (max-width: 561px) {
+			padding-bottom: 23px;
+			&:last-child {padding-bottom: 0;}
+		}
+		select {
+			cursor: pointer;
+			@media (max-width: 561px) {width: 100%!important;}
+			@include respond-to(xs) {font-size: 16px; height: auto;}
+			
+		}
+	}
+}
+
+//страница профиля
+.user-page.account {
+	overflow-x: auto;
+	.logout-link {
+		@media (max-width: 520px) {float: left!important; clear: both;}
+	}
+	nav.menu {
+		@media (max-width: 500px) {
+			& > ul {
+				float: none; width: 100%;
+				& > li {
+					&:last-child {margin-right: 0;}
+				}
+			}
+			.green-button {
+				text-align: center;
+				display: block; float: none; clear: left; margin: 15px 0 7px 0;
+			}
+		}
+		
+	}
+	.submenu {
+		ul {
+			@media (max-width: 500px) {
+				width: 100%; margin: 0 auto;
+				li {
+					float: none; width: 100%; margin-bottom: 15px; box-sizing: border-box;
+					&:last-child {margin-bottom: 0;}
+					a {text-align: center; width: 100%; box-sizing: border-box;}
+				}
+			}
+			
+		}
+		
+	}
+}
+
+//страница контакт - https://www.allfreepapers.com/contact.html
+.entry {
+	.uSlide {
+		@include respond-to(sm) {width: 100%!important; box-sizing: border-box;}
+	}
+}
+
+.account-settings  {
+	label {
+		@include respond-to(sm) {width: 100% !important; box-sizing: border-box;}
+	}
+	.text-input {
+		@include respond-to(md) {width: 378px !important;}
+		@include respond-to(sm) {width: 100% !important; box-sizing: border-box; }
+	}
+	.tabset {
+		 textarea {@include respond-to(md) {width: 100% !important; box-sizing: border-box; }}
+	}
+	.receive-block {@include respond-to(sm) {padding-left: 0;}}
+}
+
+.user-page {
+	.button-holder.l-button {@include respond-to(sm) {margin-left: 0;}}
+}
+
+#id_info_country {
+	@include respond-to(sm) {
+		 width: 100% !important;
+	}
+}
+
+//FOOTER
+.footer {
+	@include respond-to(md) {height: auto;}
+	.holder {
+		@include respond-to(md) {
+			font-size: 15px;
+			width: calc(100% - 40px);
+		}
+		@include respond-to(xs) {
+			width: 100%; padding: 12px 0 0 0;
+		}
+
+		.copyright {
+			@include respond-to(md) {
+				text-align: center; line-height: 20px;
+				width: 100% !important; margin-bottom: 10px;
+			}
+			
+		}
+
+		.footer-nav {
+			@include respond-to(md) {
+				text-align: center;
+				clear: left; padding-left: 0; width: 100%;
+				background-image: none; 
+			}
+			& > ul {
+				@include respond-to(md) {margin-right: 0; padding-top: 0; display: inline-block; float: none;}
+				
+				& > li {
+					@include respond-to(md) {margin: 20px 0; text-align: center;}
+				}
+			}
+		}
+
+		.box {
+			@include respond-to(md){
+				margin-left: 0; padding-left: 0; float: none; clear: both;
+				background-image: none;
+			}
+			.social {
+				@include respond-to(md) {text-align: center;}
+				
+				span {
+					@include respond-to(xs) {
+						font-size: 14px;
+					}
+				}
+				& > li {
+					@include respond-to(md) {
+						float: none; display: inline-block;
+					}
+					& > a {
+						@include respond-to(xs) {display: flex; align-items: center;}
+					}
+					img {
+						@include respond-to(xs) {
+							width: 25px; height: auto;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//POPUP
+.popover {
+	.close {
+		@media (max-width: 895px) { 
+			width: 25px; height: 25px; z-index: 25;
+			background-color: #000;  background-position-x: 5px; background-position-y: 5px;
+		}
+	}
+}
+
+.paypalHeader .languageToggleDisplay {
+	@media (max-width: 660px) {left: 30px !important; right: auto !important;}
+}
+select, input {
+	@include respond-to(sm) {
+		font-size: 16px; line-height: 16px;
+		height: auto; box-sizing: border-box; overflow: visible;
+	}
+}
